@@ -8,18 +8,19 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     width: 100%;
     scroll-behavior: smooth;
+    
   }
 
   *,
   *:before,
   *:after {
     box-sizing: inherit;
-    font-family: 'Raleway, sans-serif',
   }
 
   body {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
   }
 
   h1,
