@@ -32,6 +32,21 @@ const mixins = {
     font-size: 16px;
     line-height: 20px;
   `,
+
+  fs18: css`
+    font-size: 18px;
+    line-height: 22px;
+  `,
+
+  fs20: css`
+    font-size: 20px;
+    line-height: 24px;
+  `,
+
+  fs22: css`
+    font-size: 22px;
+    line-height: 26px;
+  `,
 };
 
 export default mixins;
