@@ -15,6 +15,7 @@ const useStore = create<InitialState>()(
       chatContacts: [],
       currentChat: '',
       isModalOpen: false,
+      isRefreshChat: true,
       setCurrentUser: (value) =>
         set({
           currentUser: value,
@@ -31,13 +32,13 @@ const useStore = create<InitialState>()(
         set({
           currentChat: value,
         }),
-      openModal: () =>
+      setModal: (value) =>
         set({
-          isModalOpen: true,
+          isModalOpen: value,
         }),
-      closeModal: () =>
+      setRefreshChat: (value) =>
         set({
-          isModalOpen: false,
+          isRefreshChat: value,
         }),
     }),
     {

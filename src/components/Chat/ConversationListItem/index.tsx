@@ -25,6 +25,7 @@ const ConversationListItem = () => {
             contactInfo={contactInfo}
             currentChat={currentChat}
             isLoading={isContactInfoLoading}
+            isChatLoading={isChatLoading}
           />
 
           <ConversationWrapper>

@@ -11,13 +11,21 @@ interface Props {
 }
 
 const ContactItem = ({ chatContact }: Props) => {
-  const { currentChat, setCurrentChat } = useStore((store) => store);
+  const { currentChat, setCurrentChat, isRefreshChat, setRefreshChat } =
+    useStore((store) => store);
 
   const { contactInfo, isLoading } = useGetContactInfo(chatContact.chatId);
 
+  const handleSelectChat = () => {
+    if (!isRefreshChat) {
+      setCurrentChat(chatContact.chatId);
+      setRefreshChat(true);
+    }
+  };
+
   return (
     <Wrapper
-      onClick={() => setCurrentChat(chatContact.chatId)}
+      onClick={handleSelectChat}
       $isActive={chatContact.chatId === currentChat}
     >
       {!isLoading && contactInfo ? (

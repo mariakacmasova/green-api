@@ -11,7 +11,7 @@ import {
 } from './styles';
 
 const WelcomeTitle = () => {
-  const { openModal } = useStore((store) => store);
+  const { setModal } = useStore((store) => store);
 
   return (
     <Wrapper>
@@ -25,7 +25,7 @@ const WelcomeTitle = () => {
           <Subtitle>Выберите чат для того чтобы начать</Subtitle>
         </TitleStack>
 
-        <Button onClick={openModal} type="button">
+        <Button onClick={() => setModal(true)} type="button">
           Начать
         </Button>
       </Stack>

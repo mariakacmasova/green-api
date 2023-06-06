@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FormValues } from '..';
@@ -20,9 +20,9 @@ const RESPONSE_MESSAGES = {
 export function useCheckAccount(
   accountStatus: AccountStatuses | undefined,
   accountError: string | null,
-  setAccountError: Dispatch<SetStateAction<string | null>>,
+  setAccountError: (accountError: string | null) => void,
   account: FormValues,
-  setAccount: Dispatch<SetStateAction<FormValues>>,
+  setAccount: (account: FormValues) => void,
   isError: boolean,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   responseError: any

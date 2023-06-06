@@ -9,7 +9,8 @@ import { showErrorToast } from '../../../helpers/showErrorToast';
 export function useGetChatHistory(chatId: string) {
   const [chatHistory, setChatHistory] = useState<ChatHistoryResponse[]>();
 
-  const { idInstance, apiTokenInstance } = useStore((store) => store);
+  const { idInstance, apiTokenInstance, isRefreshChat, setRefreshChat } =
+    useStore((store) => store);
 
   const { isLoading, mutateAsync } = useMutation(ChatServices.geChatHistory);
 
@@ -17,30 +18,36 @@ export function useGetChatHistory(chatId: string) {
     const getChatHistory = async () => {
       if (!chatId) return;
 
-      try {
-        const response = await mutateAsync({
-          idInstance,
-          apiTokenInstance,
-          body: {
-            chatId,
-            count: 100,
-          },
-        });
+      if (isRefreshChat) {
+        try {
+          const response = await mutateAsync({
+            idInstance,
+            apiTokenInstance,
+            body: {
+              chatId,
+              count: 100,
+            },
+          });
 
-        if (response) {
-          const filtered = response.filter((it) => !!it.idMessage);
-          const sortByTime = filtered.sort((a, b) => a.timestamp - b.timestamp);
-          setChatHistory(sortByTime);
+          if (response) {
+            const filtered = response.filter((it) => !!it.idMessage);
+            const sortByTime = filtered.sort(
+              (a, b) => a.timestamp - b.timestamp
+            );
+            setChatHistory(sortByTime);
+          }
+          setRefreshChat(false);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          setRefreshChat(false);
+          showErrorToast(err?.data?.message || err?.message);
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-        showErrorToast(err?.data?.message || err?.message);
       }
     };
 
     getChatHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatId]);
+  }, [chatId, isRefreshChat]);
 
   return { chatHistory, isLoading };
 }

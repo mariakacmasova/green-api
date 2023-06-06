@@ -21,7 +21,7 @@ import {
 const NewChatModal = () => {
   const [value, setValue] = useState<string>('');
 
-  const { idInstance, apiTokenInstance, setChatContact, closeModal } = useStore(
+  const { idInstance, apiTokenInstance, setChatContact, setModal } = useStore(
     (store) => store
   );
 
@@ -49,6 +49,8 @@ const NewChatModal = () => {
       showErrorToast(err?.data?.message || err?.message);
     }
   };
+
+  const closeModal = () => setModal(false);
 
   return (
     <Wrapper onClick={closeModal}>

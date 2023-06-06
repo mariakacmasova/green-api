@@ -13,7 +13,7 @@ import {
 } from './styles';
 
 const ContactList = () => {
-  const { chatContacts, isModalOpen, openModal } = useStore((store) => store);
+  const { chatContacts, isModalOpen, setModal } = useStore((store) => store);
 
   return (
     <>
@@ -22,7 +22,7 @@ const ContactList = () => {
         <HeaderStack>
           <HeaderGroup>
             <HeaderTitle>Чаты</HeaderTitle>
-            <AddNewChatBtn onClick={openModal} type="button">
+            <AddNewChatBtn onClick={() => setModal(true)} type="button">
               <AiOutlinePlus />
             </AddNewChatBtn>
           </HeaderGroup>

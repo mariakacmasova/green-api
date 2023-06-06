@@ -12,8 +12,9 @@ export interface InitialState {
   currentChat: string;
   setCurrentChat: (value: string) => void;
   isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
+  setModal: (value: boolean) => void;
+  isRefreshChat: boolean;
+  setRefreshChat: (value: boolean) => void;
 }
 
 export interface CredentialValues {
