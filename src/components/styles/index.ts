@@ -62,4 +62,11 @@ export const FormButton = styled.button`
     background-color: transparent;
     outline: none;
   }
+
+  &:disabled {
+    &:is(:focus, :hover, :active) {
+      color: var(--white);
+      background-color: var(--secondary-green);
+    }
+  }
 `;

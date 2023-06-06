@@ -1,74 +1,56 @@
-import { BiUserCircle } from 'react-icons/bi';
-
 import useStore from '../../../store';
+import { useGetChatHistory } from '../helpers/useGetChatHistory';
 import { useGetContactInfo } from '../helpers/useGetContactInfo';
+import Loader from '../../Loader';
 import Form from './Form';
-import {
-  ConversationItem,
-  ConversationList,
-  ConversationWrapper,
-  Message,
-  MessageAvatar,
-  MessageWrapper,
-  TopBar,
-  UserAvatar,
-  UserAvatarCircle,
-  UserInfoWrapper,
-  UserName,
-  Wrapper,
-} from './styles';
+import WelcomeTitle from './WelcomeTitle';
+import Message from './Message';
+import TopBar from './TopBar';
+import { ConversationList, ConversationWrapper, Wrapper } from './styles';
 
 const ConversationListItem = () => {
   const { currentChat } = useStore((store) => store);
 
-  const { contactInfo } = useGetContactInfo(currentChat);
+  const { chatHistory, isLoading: isChatLoading } =
+    useGetChatHistory(currentChat);
+
+  const { contactInfo, isLoading: isContactInfoLoading } =
+    useGetContactInfo(currentChat);
 
   return (
     <Wrapper>
       {currentChat ? (
         <>
-          <TopBar>
-            {contactInfo && (
-              <UserInfoWrapper>
-                <UserAvatar>
-                  {contactInfo.avatar ? (
-                    <img src={contactInfo.avatar} alt={contactInfo.name} />
-                  ) : (
-                    <BiUserCircle />
-                  )}
-                  <UserAvatarCircle />
-                </UserAvatar>
-                <UserName>
-                  {contactInfo.name ? contactInfo.name : currentChat}
-                </UserName>
-              </UserInfoWrapper>
-            )}
-          </TopBar>
+          <TopBar
+            contactInfo={contactInfo}
+            currentChat={currentChat}
+            isLoading={isContactInfoLoading}
+          />
 
           <ConversationWrapper>
             <ConversationList>
-              <ConversationItem>
-                <MessageWrapper>
-                  <MessageAvatar>
-                    <img src="" alt="" />
-                  </MessageAvatar>
-                  <Message>Message</Message>
-                </MessageWrapper>
-              </ConversationItem>
-              <ConversationItem $isRight>
-                <MessageWrapper>
-                  <MessageAvatar $isRight>
-                    <img src="" alt="" />
-                  </MessageAvatar>
-                  <Message $isRight>Message</Message>
-                </MessageWrapper>
-              </ConversationItem>
+              {!isChatLoading && chatHistory ? (
+                chatHistory.map(
+                  (it) =>
+                    !!it.idMessage && (
+                      <Message
+                        key={it.idMessage}
+                        chat={it}
+                        sender={contactInfo}
+                      />
+                    )
+                )
+              ) : (
+                <Loader size={45} isAbsoluteCentered />
+              )}
             </ConversationList>
           </ConversationWrapper>
 
           <Form />
         </>
-      ) : null}
+      ) : (
+        <WelcomeTitle />
+      )}
     </Wrapper>
   );
 };

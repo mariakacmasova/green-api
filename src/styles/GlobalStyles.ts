@@ -63,6 +63,17 @@ const GlobalStyles = createGlobalStyle`
   input[type=number] {
     -moz-appearance:textfield; /* Firefox */
   }
+  // Toast error
+  .toast-error {
+    border-radius: 5px;
+    background-color: #383838; 
+  }
+  // Toast success
+  .toast-success {
+    border-radius: 5px;
+    background-color: #383838; 
+    color: hsla(0, 0%, 100%, 0.8);
+  }
 `;
 
 export default GlobalStyles;

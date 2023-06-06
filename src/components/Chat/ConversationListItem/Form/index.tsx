@@ -5,8 +5,10 @@ import { IoMdSend } from 'react-icons/io';
 import useStore from '../../../../store';
 import { ChatServices } from '../../../../services/chatServices';
 import { SendMessageFormValues } from '../../../../services/chatServices/types';
+import { showErrorToast } from '../../../../helpers/showErrorToast';
 import Loader from '../../../Loader';
 import { Button, Input, Wrapper } from './styles';
+import { showToastSuccess } from '../../../../helpers/showSuccessToast';
 
 const Form = () => {
   const { register, handleSubmit, reset, watch } =
@@ -16,7 +18,9 @@ const Form = () => {
     (store) => store
   );
 
-  const { isLoading, mutateAsync } = useMutation(ChatServices.sendMessage);
+  const { isLoading, mutateAsync } = useMutation(ChatServices.sendMessage, {
+    onSuccess: () => showToastSuccess('Сообщение успешно отправлено!'),
+  });
 
   const onSubmit: SubmitHandler<Omit<SendMessageFormValues, 'chatId'>> = async (
     data
@@ -28,9 +32,10 @@ const Form = () => {
         body: { chatId: currentChat, message: data.message },
       });
       reset();
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       reset();
-      console.log(err);
+      showErrorToast(err?.data?.message || err?.message);
     }
   };
 

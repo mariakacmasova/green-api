@@ -4,15 +4,11 @@ import { AiOutlineClose } from 'react-icons/ai';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-import { AccountServices } from '../../../services/accountServices';
 import useStore from '../../../store';
+import { AccountServices } from '../../../services/accountServices';
+import { showErrorToast } from '../../../helpers/showErrorToast';
 import Loader from '../../Loader';
-import {
-  ErrorMessage,
-  FormButton,
-  FormInputGroup,
-  FormLabel,
-} from '../../styles';
+import { FormButton, FormInputGroup, FormLabel } from '../../styles';
 import {
   CloseButton,
   FormWrapper,
@@ -22,18 +18,14 @@ import {
   Wrapper,
 } from './styles';
 
-interface Props {
-  onClose: () => void;
-}
-
-const NewChatModal = ({ onClose }: Props) => {
+const NewChatModal = () => {
   const [value, setValue] = useState<string>('');
 
-  const { idInstance, apiTokenInstance, setChatContact } = useStore(
+  const { idInstance, apiTokenInstance, setChatContact, closeModal } = useStore(
     (store) => store
   );
 
-  const { data, isLoading, isSuccess, error, mutateAsync } = useMutation(
+  const { data, isLoading, isSuccess, mutateAsync } = useMutation(
     AccountServices.checkWhatsAppAvailability
   );
 
@@ -52,16 +44,17 @@ const NewChatModal = ({ onClose }: Props) => {
       if (response.existsWhatsapp) {
         setChatContact({ chatId: `${value}@c.us`, phone: Number(value) });
       }
-    } catch (err) {
-      console.log(err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      showErrorToast(err?.data?.message || err?.message);
     }
   };
 
   return (
-    <Wrapper onClick={onClose}>
+    <Wrapper onClick={closeModal}>
       <InnerWrapper onClick={(event) => event.stopPropagation()}>
         <Title>Создать новый чат</Title>
-        <CloseButton onClick={onClose} type="button">
+        <CloseButton onClick={closeModal} type="button">
           <AiOutlineClose />
         </CloseButton>
         {!isSuccess ? (
@@ -74,14 +67,6 @@ const NewChatModal = ({ onClose }: Props) => {
                 value={value}
                 onChange={setValue}
               />
-              {/* {errors.phone && errors.phone.type === 'required' && (
-              <ErrorMessage>Это поле обязательно для заполнения</ErrorMessage>
-            )}
-            {errors.phone && errors.phone.type === 'minLength' && (
-              <ErrorMessage>
-                Номер телефона должен быть не меньше 11 символов
-              </ErrorMessage>
-            )} */}
             </FormInputGroup>
             <FormButton>
               {isLoading ? <Loader size={20} /> : 'Создать'}

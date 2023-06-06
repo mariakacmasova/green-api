@@ -14,6 +14,7 @@ const variables = css`
     --rgb-black: 0, 0, 0;
     --white-black: #2e2e2e;
     --secondary-black: #2b2b2b;
+    --black-shadow: rgba(15, 34, 58, 0.12);
     --green: #4eac6d;
     --secondary-green: rgba(78, 172, 109, 0.9);
     --dark-white-green: rgba(78, 172, 109, 0.23);

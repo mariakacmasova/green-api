@@ -1,12 +1,19 @@
+import { ContactInfo } from '../services/accountServices/types';
+
 export interface InitialState {
   isLoggedIn: boolean;
   idInstance: string;
   apiTokenInstance: string;
+  currentUser: ContactInfo | null;
+  setCurrentUser: (value: ContactInfo) => void;
   setCredentials: (value: CredentialValues) => void;
   setChatContact: (value: ChatContact) => void;
   chatContacts: ChatContact[];
   currentChat: string;
   setCurrentChat: (value: string) => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 export interface CredentialValues {
@@ -23,25 +30,10 @@ export enum AccountStatuses {
   STARTING = 'starting',
 }
 
-// export interface Chat {
-//   id: string;
-//   archive: boolean;
-//   name: string;
-//   notSpam: boolean;
-//   ephemeralExpiration: number;
-//   ephemeralSettingTimestamp: number;
-// }
-
 export enum ChatContactType {
   USER = 'user',
   GROUP = 'group',
 }
-
-// export interface ChatContact {
-//   id: string;
-//   name: string;
-//   type: ChatContactType;
-// }
 
 export interface ChatContact {
   chatId: string;

@@ -32,3 +32,7 @@ export interface ContactInfo {
   messageExpiration: number;
   muteExpiration: number | null;
 }
+
+export interface UserSettings {
+  wid: string;
+}

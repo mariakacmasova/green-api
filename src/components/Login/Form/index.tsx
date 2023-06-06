@@ -62,7 +62,15 @@ const Form = () => {
     reset();
   };
 
-  useCheckAccount(response, setAccountError, account, setAccount, isError);
+  useCheckAccount(
+    response,
+    accountError,
+    setAccountError,
+    account,
+    setAccount,
+    isError,
+    responseError
+  );
 
   return (
     <Wrapper>

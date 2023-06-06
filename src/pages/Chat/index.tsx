@@ -12,7 +12,7 @@ const Chat = () => {
         description="Страница чатов"
         name="whatsapp-green-api"
         type="chat app"
-        keywords="chat, react, green-api, чат"
+        keywords="chat, react, green-api, чат, whatsApp"
         href={PATHS.CHAT}
       />
       <FlexContainer>

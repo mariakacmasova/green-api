@@ -11,8 +11,14 @@ const useStore = create<InitialState>()(
       isLoggedIn: false,
       idInstance: '',
       apiTokenInstance: '',
+      currentUser: null,
       chatContacts: [],
       currentChat: '',
+      isModalOpen: false,
+      setCurrentUser: (value) =>
+        set({
+          currentUser: value,
+        }),
       setCredentials: (value) =>
         set({
           isLoggedIn: value.isLoggedIn,
@@ -24,6 +30,14 @@ const useStore = create<InitialState>()(
       setCurrentChat: (value) =>
         set({
           currentChat: value,
+        }),
+      openModal: () =>
+        set({
+          isModalOpen: true,
+        }),
+      closeModal: () =>
+        set({
+          isModalOpen: false,
         }),
     }),
     {

@@ -6,6 +6,7 @@ import {
   ContactInfo,
   ContactInfoParams,
   StateResponse,
+  UserSettings,
   WhatsAppStatusParams,
   WhatsAppStatusResponse,
 } from './types';
@@ -30,6 +31,13 @@ export const AccountServices = {
     const { data } = await axios.post<ContactInfo>(
       `${API.URL_BASE}/waInstance${values.idInstance}/GetContactInfo/${values.apiTokenInstance}`,
       { chatId: values.chatId }
+    );
+    return data;
+  },
+
+  async getUserSettings(idInstance: string, apiTokenInstance: string) {
+    const { data } = await axios.get<UserSettings>(
+      `${API.URL_BASE}/waInstance${idInstance}/getSettings/${apiTokenInstance}`
     );
     return data;
   },

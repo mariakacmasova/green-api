@@ -2,32 +2,35 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import useStore from '../../../store';
-import { AccountServices } from '../../../services/accountServices';
-import { ContactInfo } from '../../../services/accountServices/types';
+import { ChatServices } from '../../../services/chatServices';
+import { ChatHistoryResponse } from '../../../services/chatServices/types';
 import { showErrorToast } from '../../../helpers/showErrorToast';
 
-export function useGetContactInfo(chatId: string) {
-  const [contactInfo, setContactInfo] = useState<ContactInfo>();
+export function useGetChatHistory(chatId: string) {
+  const [chatHistory, setChatHistory] = useState<ChatHistoryResponse[]>();
 
   const { idInstance, apiTokenInstance } = useStore((store) => store);
 
-  const { isLoading, mutateAsync } = useMutation(
-    AccountServices.getContactInfo
-  );
+  const { isLoading, mutateAsync } = useMutation(ChatServices.geChatHistory);
 
   useEffect(() => {
-    const getContactInfo = async () => {
+    const getChatHistory = async () => {
       if (!chatId) return;
 
       try {
         const response = await mutateAsync({
           idInstance,
           apiTokenInstance,
-          chatId,
+          body: {
+            chatId,
+            count: 100,
+          },
         });
 
         if (response) {
-          setContactInfo(response);
+          const filtered = response.filter((it) => !!it.idMessage);
+          const sortByTime = filtered.sort((a, b) => a.timestamp - b.timestamp);
+          setChatHistory(sortByTime);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
@@ -35,9 +38,9 @@ export function useGetContactInfo(chatId: string) {
       }
     };
 
-    getContactInfo();
+    getChatHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatId]);
 
-  return { contactInfo, isLoading };
+  return { chatHistory, isLoading };
 }

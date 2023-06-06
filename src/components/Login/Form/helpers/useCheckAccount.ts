@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { FormValues } from '..';
 import { PATHS } from '../../../../constants/Paths';
+import { showErrorToast } from '../../../../helpers/showErrorToast';
 import useStore from '../../../../store';
 import { AccountStatuses } from '../../../../store/types';
 
 const RESPONSE_MESSAGES = {
-  NOT_AUTHORIZED: 'Аккаунт не авторизован. Для авторизации учетной записи см. раздел «Перед началом работы».',
+  NOT_AUTHORIZED:
+    'Аккаунт не авторизован. Для авторизации учетной записи см. раздел «Перед началом работы».',
   BLOCKED: 'Аккаунт заблокирован',
   SLEEP_MODE:
     'Аккаунт находится в спящем режиме. Состояние возможно при выключенном телефоне. После включения телефона может пройти до 5 минут, прежде чем статус учетной записи изменится на авторизованный.',
@@ -17,10 +19,13 @@ const RESPONSE_MESSAGES = {
 
 export function useCheckAccount(
   accountStatus: AccountStatuses | undefined,
+  accountError: string | null,
   setAccountError: Dispatch<SetStateAction<string | null>>,
   account: FormValues,
   setAccount: Dispatch<SetStateAction<FormValues>>,
-  isError: boolean
+  isError: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  responseError: any
 ) {
   const navigate = useNavigate();
 
@@ -33,16 +38,24 @@ export function useCheckAccount(
 
   useEffect(() => {
     if (isError) {
+      showErrorToast(responseError?.message);
+      clearState();
+    }
+
+    if (accountError) {
+      showErrorToast(accountError);
       clearState();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError]);
+  }, [isError, accountError]);
 
   useEffect(() => {
-    const checkAccountStatus = (accountStatus: AccountStatuses | undefined) => {
-      if (!accountStatus) return;
+    const checkAccountStatus = (
+      accountStatusValue: AccountStatuses | undefined
+    ) => {
+      if (!accountStatusValue) return;
 
-      if (accountStatus === AccountStatuses.AUTHORIZED) {
+      if (accountStatusValue === AccountStatuses.AUTHORIZED) {
         setCredentials({
           idInstance: account.idInstance,
           apiTokenInstance: account.apiTokenInstance,
@@ -52,7 +65,7 @@ export function useCheckAccount(
         clearState();
       }
 
-      switch (accountStatus) {
+      switch (accountStatusValue) {
         case AccountStatuses.NOT_AUTHORIZED:
           setAccountError(RESPONSE_MESSAGES.NOT_AUTHORIZED);
           break;
