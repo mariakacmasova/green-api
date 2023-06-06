@@ -11,8 +11,13 @@ interface Props {
 }
 
 const ContactItem = ({ chatContact }: Props) => {
-  const { currentChat, setCurrentChat, isRefreshChat, setRefreshChat } =
-    useStore((store) => store);
+  const {
+    currentChat,
+    setCurrentChat,
+    isRefreshChat,
+    setRefreshChat,
+    currentUser,
+  } = useStore((store) => store);
 
   const { contactInfo, isLoading } = useGetContactInfo(chatContact.chatId);
 
@@ -22,6 +27,8 @@ const ContactItem = ({ chatContact }: Props) => {
       setRefreshChat(true);
     }
   };
+
+  const isUserYou = currentUser?.chatId === chatContact.chatId ? '(Вы)' : '';
 
   return (
     <Wrapper
@@ -38,7 +45,9 @@ const ContactItem = ({ chatContact }: Props) => {
             )}
           </ImgWrapper>
           <ContactName>
-            {contactInfo.name ? contactInfo.name : chatContact.phone}
+            {contactInfo.name
+              ? `${contactInfo.name}${isUserYou}`
+              : `${chatContact.phone}${isUserYou}`}
           </ContactName>
         </>
       ) : (

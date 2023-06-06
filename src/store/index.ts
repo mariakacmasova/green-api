@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { InitialState } from './types';
 
-const STORAGE_NAME = 'whatsApp-green-api';
+const STORAGE_NAME = 'whats-app-green-api';
 
 const useStore = create<InitialState>()(
   persist(
@@ -15,7 +15,7 @@ const useStore = create<InitialState>()(
       chatContacts: [],
       currentChat: '',
       isModalOpen: false,
-      isRefreshChat: true,
+      isRefreshChat: false,
       setCurrentUser: (value) =>
         set({
           currentUser: value,
