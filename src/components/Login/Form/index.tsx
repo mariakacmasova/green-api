@@ -90,6 +90,7 @@ const Form = () => {
               $isError={!!errors.idInstance}
               type="text"
               name="idInstance"
+              placeholder="idInstance"
             />
             {errors.idInstance && errors.idInstance.type === 'required' && (
               <ErrorMessage>Это поле обязательно для заполнения</ErrorMessage>
@@ -115,6 +116,7 @@ const Form = () => {
               $isError={!!errors.apiTokenInstance}
               type="text"
               name="apiTokenInstance"
+              placeholder="apiTokenInstance"
             />
             {errors.apiTokenInstance &&
               errors.apiTokenInstance.type === 'required' && (

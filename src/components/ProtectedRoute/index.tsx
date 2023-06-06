@@ -15,9 +15,10 @@ const ProtectedRoute = ({ redirectPath = PATHS.LOGIN, children }: Props) => {
   const isAuthenticated = useStore((store) => store.isLoggedIn);
 
   if (!isAuthenticated) {
-    return <Navigate to={redirectPath} state={{ from: location }} replace />
+    return <Navigate to={redirectPath} state={{ from: location }} replace />;
   }
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{children}</>;
 };
 

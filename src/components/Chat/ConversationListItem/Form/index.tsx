@@ -6,9 +6,9 @@ import useStore from '../../../../store';
 import { ChatServices } from '../../../../services/chatServices';
 import { SendMessageFormValues } from '../../../../services/chatServices/types';
 import { showErrorToast } from '../../../../helpers/showErrorToast';
+import { showToastSuccess } from '../../../../helpers/showSuccessToast';
 import Loader from '../../../Loader';
 import { Button, Input, Wrapper } from './styles';
-import { showToastSuccess } from '../../../../helpers/showSuccessToast';
 
 const Form = () => {
   const { register, handleSubmit, reset, watch } =

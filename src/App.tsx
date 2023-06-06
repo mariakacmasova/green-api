@@ -17,16 +17,16 @@ const App = () => {
       element: (
         <ProtectedRoute>
           <Chat />
-        </ProtectedRoute>),
+        </ProtectedRoute>
+      ),
     },
     {
       path: '*',
-      element: <Navigate to={PATHS.LOGIN} />
-    }
+      element: <Navigate to={PATHS.LOGIN} />,
+    },
   ]);
 
-  return <Layout>{element}</Layout>
-
-}
+  return <Layout>{element}</Layout>;
+};
 
 export default App;

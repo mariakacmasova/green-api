@@ -78,7 +78,7 @@ const NewChatModal = () => {
           <SuccessMessage>
             {data.existsWhatsapp
               ? 'Чат создан'
-              : 'Пользователь с таким номером не существует!'}
+              : 'Пользователь с таким номером нету WhatsApp-а!'}
           </SuccessMessage>
         )}
       </InnerWrapper>

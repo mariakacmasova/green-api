@@ -10,7 +10,7 @@ const Chat = () => {
       <SEO
         title="Чаты"
         description="Страница чатов"
-        name="whatsapp-green-api"
+        name="whats-app-green-api"
         type="chat app"
         keywords="chat, react, green-api, чат, whatsApp"
         href={PATHS.CHAT}

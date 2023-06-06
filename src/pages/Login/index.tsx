@@ -8,7 +8,7 @@ const Login = () => {
       <SEO
         title="Авторизация"
         description="Страница авторизации"
-        name="whatsapp-green-api"
+        name="whats-app-green-api"
         type="chat app"
         keywords="chat, react, green-api, чат, авторизация, логинизация"
         href={PATHS.LOGIN}

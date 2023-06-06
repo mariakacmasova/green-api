@@ -31,11 +31,6 @@ export enum AccountStatuses {
   STARTING = 'starting',
 }
 
-export enum ChatContactType {
-  USER = 'user',
-  GROUP = 'group',
-}
-
 export interface ChatContact {
   chatId: string;
   phone: number;

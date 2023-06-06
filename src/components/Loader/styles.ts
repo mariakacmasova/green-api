@@ -1,5 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
 import { TbLoader3 } from 'react-icons/tb';
+import styled, { css, keyframes } from 'styled-components';
 
 type Props = {
   $isAbsolute?: boolean;

@@ -31,7 +31,6 @@ const SEO = ({ title, description, name, type, keywords, href }: Props) => {
       <meta name="twitter:description" content={description} />
       {/* End Twitter tags */}
       <link rel="canonical" href={href} />
-      {/* <link rel="icon" href="/logo.png" /> */}
     </Helmet>
   );
 };
